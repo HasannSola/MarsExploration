@@ -1,4 +1,5 @@
-﻿using MarsExploration.Entities.Enum;
+﻿using MarsExploration.Core.ExceptionHandling;
+using MarsExploration.Entities.Enum;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,7 +8,7 @@ namespace MarsExploration.Entities.Model
 {
     public class Position
     {
-        public Position(int xCoordinate, int yCoordinate, LocationEnum location, String commands,int xMarsCoordinate, int yMarsCoordinate ,CommandEnum command=0)
+        public Position(int xCoordinate, int yCoordinate, LocationEnum location, String commands, int xMarsCoordinate, int yMarsCoordinate, CommandEnum command = 0)
         {
             this.xCoordinate = xCoordinate;
             this.yCoordinate = yCoordinate;

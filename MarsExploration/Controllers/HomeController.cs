@@ -12,7 +12,8 @@ using MarsExploration.Entities.Enum;
 
 namespace MarsExploration.Controllers
 {
-
+    //[Route("home/")]
+    //[Produces("application/json")]
     public class HomeController : Controller
     {
         private readonly ILocationManager _locationManager;
@@ -28,28 +29,47 @@ namespace MarsExploration.Controllers
             return View(model);
         }
 
-
-
         //[HttpPost("save")]
         public JsonResult CreateLocation([FromBody]LocationModel locationModel)
         {
             Position newPosition = null;
-            if (ModelState.IsValid)
+            try
             {
-                LocationEnum location = (LocationEnum)Enum.Parse(typeof(LocationEnum), locationModel.StPosition);
-                Position position = new Position(locationModel.StStartX, locationModel.StStartY, location, locationModel.StCommand, locationModel.StMarsX, locationModel.StMarsY);
-                newPosition = _locationManager.SetLocation(position);
+                if (ModelState.IsValid)
+                {
+                    LocationEnum location = (LocationEnum)Enum.Parse(typeof(LocationEnum), locationModel.StPosition);
+                    Position position = new Position(locationModel.StStartX, locationModel.StStartY, location, locationModel.StCommand, locationModel.StMarsX, locationModel.StMarsY);
+                    newPosition = _locationManager.SetLocation(position);
+                    return Json((object)new
+                    {
+                        data = "[" + newPosition.xCoordinate + "," + newPosition.yCoordinate + "] " + newPosition.location,
+                        message = newPosition == null ? "işlme başarısız!" : "işlme başarılı",
+                        success = newPosition == null ? "false" : "true",
+                        redirectUrl = "",
+                    });
+                }
             }
-
+            catch (Exception ex)
+            {
+                if (ex.Message == "Coordinate_Out_bounds")
+                {
+                    return Json((object)new
+                    {
+                        data = "[Coordinate_Out_bounds]",
+                        message = "Başlangıç koordinatların büyük koordinat girildi.",
+                        success = "false",
+                        redirectUrl = "",
+                    });
+                }
+            }
             return Json((object)new
             {
-                data = "[" + newPosition.xCoordinate + "," + newPosition.yCoordinate + "] " + newPosition.location,
-                message = "işlme başarılı",
-                success = newPosition == null ? "false" : "true",
+                data = "NULL",
+                message = "işlme başarısız! alanları kontorl ediniz",
+                success = "false",
                 redirectUrl = "",
             });
 
         }
-
     }
 }

@@ -12,8 +12,6 @@ namespace MarsExploration.Entities.Enum
         [Display(Name = "Right")]
         R,
         [Display(Name = "CurrentLocation")]
-        M,
-        [Display(Name = "FirstLocation")]
-        F
+        M
     }
 }

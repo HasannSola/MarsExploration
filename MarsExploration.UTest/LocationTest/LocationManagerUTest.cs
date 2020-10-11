@@ -21,17 +21,23 @@ namespace MarsExploration.UTest.LocationTest
             xyMarsCoordinate = new int[XCoordinate, YCoordinate];
         }
 
+        /// <summary>
+        /// 13N çıktısı
+        /// </summary>
         [Fact]
         public void FirstTestMethod()
         {
             string commands = "LMLMLMLMM";
-            var position = new Position(1, 2, LocationEnum.N, commands ,XCoordinate, YCoordinate);
+            var position = new Position(1, 2, LocationEnum.N, commands, XCoordinate, YCoordinate);
             var result = _locationManager.SetLocation(position);
             Assert.NotNull(result);
             var resultJoin = result.xCoordinate.ToString() + result.yCoordinate.ToString() + result.location.ToString();
             Assert.Equal("13N", resultJoin);
         }
 
+        /// <summary>
+        /// 51E çıktısı
+        /// </summary>
         [Fact]
         public void SecondtTestMethod()
         {
@@ -43,7 +49,9 @@ namespace MarsExploration.UTest.LocationTest
             Assert.Equal("51E", resultJoin);
         }
 
-
+        /// <summary>
+        /// Tanımlanmayan bir komut ile işlem yapma
+        /// </summary>
         [Fact]
         public void NotFoundComnmanTestMethod()
         {
@@ -61,24 +69,29 @@ namespace MarsExploration.UTest.LocationTest
             }
         }
 
+        /// <summary>
+        /// Başlangıç koordinatlarında büyük koordinat girince
+        /// </summary>
         [Fact]
         public void XYComnmanTestMethod()
         {
             try
             {
                 string commands = "LMR";
-                var position = new Position(5, 6, LocationEnum.E, commands, XCoordinate, YCoordinate);
+                var position = new Position(6, 6, LocationEnum.E, commands, XCoordinate, YCoordinate);
                 var result = _locationManager.SetLocation(position);
                 Assert.NotNull(result);
                 var resultJoin = result.xCoordinate.ToString() + result.yCoordinate.ToString() + result.location.ToString();
             }
             catch (Exception ex)
             {
-                Assert.Equal("Not_Found_Command", ex.Message);
+                Assert.Equal("Coordinate_Out_bounds", ex.Message);
             }
         }
 
-
+        /// <summary>
+        /// Komut Null olma durumu
+        /// </summary>
         [Fact]
         public void NullCommandTest()
         {
