@@ -1,0 +1,81 @@
+﻿@model MarsExploration.Models.HomeViewModels
+
+@{
+    ViewBag.Title = "Home";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+    <div ng-app="AppModule" data-ng-controller="homeCtrl">
+        <form id="homeFormId">
+            <div class="wrapper wrapper-content animated fadeInRight ecommerce row">
+                <div class="col col-md-2">
+                    <div class="form-group">
+                        <label class=" control-label pb-2">Mars XY</label>
+                        <span class="spanText">ör:10,10 </span>
+                        <input type="text" class="form-control" placeholder="10,10" onkeyup="this.value=this.value.replace(/[^0-9,]/,'')" name="StMarsXY" value="">
+                    </div>
+                </div>
+                <div class="col col-md-2">
+                    <div class="form-group">
+                        <label class=" control-label pb-2">Start XY</label>
+                        <span class="spanText">ör:1,2 </span>
+                        <input type="text" class="form-control" placeholder="1,1" name="StStartXY" value="">
+                    </div>
+                </div>
+                <div class="col col-md-2">
+                    <div class="form-group">
+                        <label class=" control-label pb-2">Yön Seç</label>
+                        <span class="spanText">ör:asd ltd.şti </span>
+                        <select class="form-control" id="StPosition" name="StPosition">
+                            <option value="0">Seçiniz</option>
+                            @foreach (var item in Model.locations)
+                            {
+                                <option value="@item.Key">@item.Value</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="col col-md-2">
+                    <div class="form-group">
+                        <label class=" control-label pb-2">Komutlar</label>
+                        <span class="spanText">ör:LMR </span>
+                        <input type="text" class="form-control" placeholder="LRM"  style="text-transform:uppercase" name="StCommand" value="">
+                    </div>
+                </div>
+                <div class="col col-md-4">
+                    <div class="form-group" style="margin-top: 35px !important;">
+                        <button type="button" class="pull-right btn btn-w-m btn-primary" id="locationAddBtn">Bul</button>
+                    </div>
+                </div>
+            </div>
+            <hr />
+            <div class="text-center">
+                <h2><strong>{{locationResult}}</strong></h2>
+            </div>
+        </form>
+    </div>
+@section Styles {
+}
+
+@section Scripts {
+    <environment include="Development">
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+        <script src="~/js/angular.js"></script>
+        <script src="~/js/toastr/toastr.min.js"></script>
+        <script src="~/Angular/Service/helperService.js"></script>
+        <script src="~/Angular/Controller/homeController.js"></script>
+        <script src="~/Angular/Service/coreService.js"></script>
+    </environment>
+    <environment include="Product">
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+        <script src="~/js/angular.min.js"></script>
+        <script src="~/js/toastr/toastr.min.js"></script>
+        <script src="~/Angular/Service/helperService.js"></script>
+        <script src="~/Angular/Controller/homeController.js"></script>
+        <script src="~/Angular/Service/coreService.js"></script>
+    </environment>
+}
