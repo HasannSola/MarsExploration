@@ -1,4 +1,5 @@
 ﻿using MarsExploration.BLL.Abstract;
+using MarsExploration.Core.ExceptionHandling;
 using MarsExploration.Entities.Enum;
 using MarsExploration.Entities.Model;
 using System;
@@ -11,23 +12,30 @@ namespace MarsExploration.BLL.Concrete
     {
         public Position SetLocation(Position position)
         {
-            for (int i = 0; i < position.commands.Length; i++)
+            try
             {
-                position.command = (CommandEnum)Enum.Parse(typeof(CommandEnum),position.commands[i].ToString());
-                if (position.command != CommandEnum.M)
+                for (int i = 0; i < position.commands.Length; i++)
                 {
-                    ///
-                    /// L , R göre robotun gideceği yönü bulma
-                    ///
-                    FindLocation(position);
+                    position.command = (CommandEnum)Enum.Parse(typeof(CommandEnum), position.commands[i].ToString());
+                    if (position.command != CommandEnum.M)
+                    {
+                        ///
+                        /// L , R göre robotun gideceği yönü bulma
+                        ///
+                        FindLocation(position);
+                    }
+                    else
+                    {
+                        ///
+                        ///N,S,W ve E göre bir birim hareket yapma
+                        ///
+                        SetCommand(position);
+                    }
                 }
-                else
-                {
-                    ///
-                    ///N,S,W ve E göre bir birim hareket yapma
-                    ///
-                    SetCommand(position);
-                }
+            }
+            catch (Exception ex)
+            {
+                throw new NotFoundCommandException();
             }
             return position;
         }

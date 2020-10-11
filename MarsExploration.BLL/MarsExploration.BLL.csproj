@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\MarsExploration.Core\MarsExploration.Core.csproj" />
     <ProjectReference Include="..\MarsExploration.Entities\MarsExploration.Entities.csproj" />
   </ItemGroup>
 
