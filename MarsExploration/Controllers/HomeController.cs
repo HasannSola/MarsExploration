@@ -37,15 +37,15 @@ namespace MarsExploration.Controllers
             if (ModelState.IsValid)
             {
                 LocationEnum location = (LocationEnum)Enum.Parse(typeof(LocationEnum), locationModel.StPosition);
-                Position position = new Position(locationModel.StStartX, locationModel.StStartY, location, locationModel.StCommand);
-                newPosition= _locationManager.SetLocation(position);
+                Position position = new Position(locationModel.StStartX, locationModel.StStartY, location, locationModel.StCommand, locationModel.StMarsX, locationModel.StMarsY);
+                newPosition = _locationManager.SetLocation(position);
             }
 
             return Json((object)new
             {
                 data = "[" + newPosition.xCoordinate + "," + newPosition.yCoordinate + "] " + newPosition.location,
-                message ="işlme başarılı",
-                success = newPosition==null?"false":"true",
+                message = "işlme başarılı",
+                success = newPosition == null ? "false" : "true",
                 redirectUrl = "",
             });
 

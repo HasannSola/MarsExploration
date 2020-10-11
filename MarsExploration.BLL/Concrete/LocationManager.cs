@@ -42,12 +42,13 @@ namespace MarsExploration.BLL.Concrete
 
         private void SetCommand(Position position)
         {
+
             switch (position.location)
             {
-                case LocationEnum.N: position.yCoordinate = position.yCoordinate + 1; break;
-                case LocationEnum.S: position.yCoordinate = position.yCoordinate - 1; break;
-                case LocationEnum.E: position.xCoordinate = position.xCoordinate + 1; break;
-                case LocationEnum.W: position.xCoordinate = position.xCoordinate - 1; break;
+                case LocationEnum.N: position.yCoordinate = position.yMarsCoordinate >= (position.yCoordinate + 1) ? (position.yCoordinate + 1) : position.yCoordinate; break;
+                case LocationEnum.S: position.yCoordinate = position.yMarsCoordinate >= (position.yCoordinate - 1) && (position.yCoordinate - 1) >= 0 ? (position.yCoordinate - 1) : position.yCoordinate; break;
+                case LocationEnum.E: position.xCoordinate = position.xMarsCoordinate >= (position.xCoordinate + 1) ? (position.xCoordinate + 1) : position.xCoordinate; break;
+                case LocationEnum.W: position.xCoordinate = position.xMarsCoordinate >= (position.xCoordinate - 1) && (position.xCoordinate - 1)>=0 ? (position.xCoordinate - 1) : position.xCoordinate; break;
             }
         }
 

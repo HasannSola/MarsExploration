@@ -12,19 +12,20 @@ namespace MarsExploration.UTest.LocationTest
     public class LocationManagerUTest
     {
         private readonly ILocationManager _locationManager;
-        private readonly int[,] MarsCoordinate;
-
+        private readonly int[,] xyMarsCoordinate;
+        private int XCoordinate = 5;
+        private int YCoordinate = 5;
         public LocationManagerUTest()
         {
             _locationManager = new LocationManager();
-            MarsCoordinate = new int[5, 5];
+            xyMarsCoordinate = new int[XCoordinate, YCoordinate];
         }
 
         [Fact]
         public void FirstTestMethod()
         {
             string commands = "LMLMLMLMM";
-            var position = new Position(1, 2, LocationEnum.N, commands);
+            var position = new Position(1, 2, LocationEnum.N, commands ,XCoordinate, YCoordinate);
             var result = _locationManager.SetLocation(position);
             Assert.NotNull(result);
             var resultJoin = result.xCoordinate.ToString() + result.yCoordinate.ToString() + result.location.ToString();
@@ -35,7 +36,7 @@ namespace MarsExploration.UTest.LocationTest
         public void SecondtTestMethod()
         {
             string commands = "MMRMMRMRRM";
-            var position = new Position(3, 3, LocationEnum.E, commands);
+            var position = new Position(3, 3, LocationEnum.E, commands, XCoordinate, YCoordinate);
             var result = _locationManager.SetLocation(position);
             Assert.NotNull(result);
             var resultJoin = result.xCoordinate.ToString() + result.yCoordinate.ToString() + result.location.ToString();
@@ -49,7 +50,7 @@ namespace MarsExploration.UTest.LocationTest
             try
             {
                 string commands = "LMÖÇ";
-                var position = new Position(3, 3, LocationEnum.E, commands);
+                var position = new Position(3, 3, LocationEnum.E, commands, XCoordinate, YCoordinate);
                 var result = _locationManager.SetLocation(position);
                 Assert.NotNull(result);
                 var resultJoin = result.xCoordinate.ToString() + result.yCoordinate.ToString() + result.location.ToString();
@@ -66,7 +67,7 @@ namespace MarsExploration.UTest.LocationTest
             try
             {
                 string commands = "LMR";
-                var position = new Position(5, 6, LocationEnum.E, commands);
+                var position = new Position(5, 6, LocationEnum.E, commands, XCoordinate, YCoordinate);
                 var result = _locationManager.SetLocation(position);
                 Assert.NotNull(result);
                 var resultJoin = result.xCoordinate.ToString() + result.yCoordinate.ToString() + result.location.ToString();
@@ -75,6 +76,18 @@ namespace MarsExploration.UTest.LocationTest
             {
                 Assert.Equal("Not_Found_Command", ex.Message);
             }
+        }
+
+
+        [Fact]
+        public void NullCommandTest()
+        {
+            string commands = "";
+            var position = new Position(4, 3, LocationEnum.E, commands, XCoordinate, YCoordinate);
+            var result = _locationManager.SetLocation(position);
+            Assert.NotNull(result);
+            var resultJoin = result.xCoordinate.ToString() + result.yCoordinate.ToString() + result.location.ToString();
+            Assert.Equal("43E", resultJoin);
         }
 
     }
